@@ -1,40 +1,90 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>JeSuis Clock</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
-    <h1>JeSuis Clock</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .clock-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .clock {
+            margin: 10px 0;
+        }
+        .city {
+            font-weight: bold;
+        }
+        .time {
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
     <div class="clock-container">
-      <div class="clock">
-        <div class="location">New York</div>
-        <div class="time" id="new-york-time"></div>
-      </div>
-      <div class="clock">
-        <div class="location">London</div>
-        <div class="time" id="london-time"></div>
-      </div>
-      <div class="clock">
-        <div class="location">San Diego</div>
-        <div class="time" id="san-diego-time"></div>
-      </div>
-	  <div class="clock">
-  <div class="location">Sydney</div>
-  <div class="time" id="sydney-time"></div>
-</div>
-<div class="clock">
-  <div class="location">Helsinki</div>
-  <div class="time" id="helsinki-time"></div>
-</div>
-
-<div class="clock">
-  <div class="location">New Delhi</div>
-  <div class="time" id="new-delhi-time"></div>
-</div>
-
+        <div id="new-york-time" class="clock">
+            <div class="city">New York:</div>
+            <div class="time"></div>
+        </div>
+        <div id="london-time" class="clock">
+            <div class="city">London:</div>
+            <div class="time"></div>
+        </div>
+        <div id="san-diego-time" class="clock">
+            <div class="city">San Diego:</div>
+            <div class="time"></div>
+        </div>
+        <div id="sydney-time" class="clock">
+            <div class="city">Sydney:</div>
+            <div class="time"></div>
+        </div>
+        <div id="helsinki-time" class="clock">
+            <div class="city">Helsinki:</div>
+            <div class="time"></div>
+        </div>
+        <div id="new-delhi-time" class="clock">
+            <div class="city">New Delhi:</div>
+            <div class="time"></div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+    <script>
+        function updateTime() {
+            const timeZones = {
+                "new-york-time": { timeZone: "America/New_York", locale: "en-US" },
+                "london-time": { timeZone: "Europe/London", locale: "en-GB" },
+                "san-diego-time": { timeZone: "America/Los_Angeles", locale: "en-US" },
+                "sydney-time": { timeZone: "Australia/Sydney", locale: "en-AU" },
+                "helsinki-time": { timeZone: "Europe/Helsinki", locale: "en-FI" },
+                "new-delhi-time": { timeZone: "Asia/Kolkata", locale: "en-IN" }
+            };
+
+            const now = new Date();
+
+            for (const [id, { timeZone, locale }] of Object.entries(timeZones)) {
+                const timeString = now.toLocaleString(locale, { timeZone });
+                const element = document.getElementById(id).querySelector('.time');
+                if (element) {
+                    element.textContent = timeString;
+                } else {
+                    console.error(`Element with id ${id} not found`);
+                }
+            }
+        }
+
+        setInterval(updateTime, 1000);
+    </script>
+</body>
 </html>
